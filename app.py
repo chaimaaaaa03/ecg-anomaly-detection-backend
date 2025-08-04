@@ -27,21 +27,9 @@ app.config['SESSION_TYPE'] = 'filesystem'  # Can be 'redis', 'memcached', etc. i
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expiry
 
-# Configuration CORS dynamique
-if os.environ.get('VERCEL_ENV') == 'production':
-    # En production, remplacez par votre domaine frontend
-    allowed_origins = [
-        "https://votre-frontend.vercel.app",
-        "https://votre-domaine-custom.com"
-    ]
-else:
-    # En développement
-    allowed_origins = [
-        "http://localhost:3000",
-        "http://localhost:3001"
-    ]
 
-CORS(app,origins=allowed_origins, supports_credentials=True,)
+
+CORS(app,origins=["*"], supports_credentials=True,)
 app.config.update(
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=False
