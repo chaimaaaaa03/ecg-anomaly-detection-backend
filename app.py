@@ -21,7 +21,7 @@ from flask_session import Session
 
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:chaimaa@localhost/ECG'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:chaimaa@5432/ECG'
 app.config['SECRET_KEY'] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'  # Can be 'redis', 'memcached', etc. in production
 app.config['SESSION_PERMANENT'] = True
