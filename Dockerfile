@@ -25,5 +25,11 @@ COPY . .
 
 EXPOSE 5000
 
-# Use Flask development server
-CMD ["python", "app.py"]
+
+
+# Make sure the wait script is available
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
+# Use the wait script to wait for PostgreSQL before running Flask
+CMD ["/wait-for-it.sh", "db:5432", "--", "python", "app.py"]
