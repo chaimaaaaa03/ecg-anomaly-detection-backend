@@ -26,5 +26,5 @@ COPY . .
 EXPOSE 5000
 
 
-# Use Flask development server
-CMD ["python", "app.py"]
+# Run the app with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
