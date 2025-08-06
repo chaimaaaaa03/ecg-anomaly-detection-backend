@@ -17,4 +17,3 @@ EXPOSE 5000
 
 # Start the app with gunicorn
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
-docker build -t my-flask-app
