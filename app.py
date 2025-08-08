@@ -45,15 +45,13 @@ def get_database_url():
 app.config['SQLALCHEMY_DATABASE_URI'] = get_database_url()
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-
-app.config['SECRET_KEY'] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'  # Can be 'redis', 'memcached', etc. in production
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expiry
 
 
 
-CORS(app,origins=["*"], supports_credentials=True,)
+CORS(app,origins=["https://ecg-anomaly-detection-frontend.vercel.app"], supports_credentials=True)
 app.config.update(
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=False
