@@ -53,8 +53,9 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expiry
 
 CORS(app,origins=["https://ecg-anomaly-detection-frontend.vercel.app"], supports_credentials=True)
 app.config.update(
-    SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=False
+    SESSION_COOKIE_SAMESITE="None",  # Allow cross-site cookies
+    SESSION_COOKIE_SECURE=True,      # Required for "None"
+    SESSION_COOKIE_HTTPONLY=True,
 )
 app.config['SESSION_PERMANENT'] = True
 
