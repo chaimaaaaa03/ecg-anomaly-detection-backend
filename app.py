@@ -46,7 +46,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = get_database_url()
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
-
+app.config['SECRET_KEY'] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'  # Can be 'redis', 'memcached', etc. in production
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expiry
@@ -79,6 +79,29 @@ login_manager.login_view = 'login'
 def load_user(user_id):
 
     return User.query.get(user_id)
+
+def create_admin():
+
+    # Check if admin exists
+    existing_admin = User.query.filter_by(username='admin').first()
+    if not existing_admin:
+        admin = User(
+        name= 'Admin',
+        username='admin',
+        email='admin@gmail.com',
+        is_admin=True
+        )
+        admin.set_password('adminpass')
+        db.session.add(admin)
+        db.session.commit()
+        print(f"✅ Admin created.")
+    else:
+        print("ℹ️ Admin already exists.")
+
+# Call the function when app starts
+with app.app_context():
+    create_admin()
+
 
 def format_patient(patient):
     return {
