@@ -22,12 +22,31 @@ from flask_session import Session
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 # ✅ Use env var from docker-compose
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    'DATABASE_URL',
-    'postgresql://postgres:chaimaa@db:5432/ECG'  # fallback (optional)
-)
+# Database configuration
+def get_database_url():
+    """Get database URL based on environment"""
+    # Production: Render provides DATABASE_URL
+    if 'DATABASE_URL' in os.environ:
+        db_url = os.environ['DATABASE_URL']
+        # Fix for newer SQLAlchemy versions
+        if db_url.startswith('postgres://'):
+            db_url = db_url.replace('postgres://', 'postgresql://', 1)
+        return db_url
+    
+    # Development: Use your local Docker setup
+    elif 'FLASK_ENV' in os.environ and os.environ['FLASK_ENV'] == 'development':
+        return 'postgresql://user:password@db:5432/database_name'  # Your local config
+    
+    # Fallback: SQLite for local testing without Docker
+    else:
+        return 'sqlite:///app.db'
 
-app.config['SECRET_KEY'] = 'secret'
+# Configure Flask
+app.config['SQLALCHEMY_DATABASE_URI'] = get_database_url()
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+
+
 app.config['SESSION_TYPE'] = 'filesystem'  # Can be 'redis', 'memcached', etc. in production
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Session expiry
