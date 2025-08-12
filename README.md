@@ -1,8 +1,5 @@
 
 ---
-
-## **Backend (Flask) README.md**
-```markdown
 # ECG Anomaly Detection - Backend
 
 This repository contains the backend API for the ECG anomaly detection web application.  
