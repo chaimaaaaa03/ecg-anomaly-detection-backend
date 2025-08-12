@@ -8,7 +8,6 @@ It handles data storage, user authentication, anomaly detection processing, and 
 ---
 
 **Supervised by:** Prof. Yann BENMAISSA  
-**Developed by:** Chaimaâ BADRI & [Your Name]  
 
 ---
 
