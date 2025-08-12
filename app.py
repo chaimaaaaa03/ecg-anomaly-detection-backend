@@ -20,7 +20,7 @@ from flask_cors import CORS
 from flask_session import Session 
 
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+app = Flask(__name__, static_folder='static')
 # ✅ Use env var from docker-compose
 # Database configuration
 def get_database_url():
